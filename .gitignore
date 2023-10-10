@@ -26,4 +26,3 @@ replay_pid*
 #mes trucs
 *.json
 node_modules/
-deploy_command.js

@@ -10,7 +10,7 @@ const path = require("path");
 
 function getDeck() {
   deck = [];
-  suits = ["Pique", "Trefle", "Carreau", "Roi"];
+  suits = ["Pique", "Trefle", "Carreau", "Coeur"];
   values = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
   for (let i = 0; i < this.suits.length; i++) {
     for (let x = 0; x < this.values.length; x++) {
@@ -34,18 +34,14 @@ function writeToFile(userId, deck) {
   });
 }
 
-function shuffle(deck)
+function shuffle(array)
 {
-	for (let i = 0; i < 1000; i++)
-	{
-		const  location1 = Math.floor((Math.random() * deck.length));
-		const location2 = Math.floor((Math.random() * deck.length));
-		const tmp = deck[location1];
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
 
-		deck[location1] = deck[location2];
-		deck[location2] = tmp;
 	}
-  return deck;
+  return array;
 }
 
 module.exports = {
@@ -59,13 +55,14 @@ module.exports = {
       `/home/hugo/Documents/VSCode/Igdryl/commands/carte/stockage/${userId}.json`
     );
     if (fs.existsSync(filePath)) {
-      interaction.reply({content:"Vous avez déjà un paquet de carte !", ephemeral: true,});
       fs.readFile(filePath, 'utf8', (err, data) => {
         if (err) {
           console.error(err);
           return;
         }
-        console.log(data);
+        const deck = JSON.parse(data);
+
+        interaction.reply({content:`Vous avez ${deck.length} cartes dans votre paquet`});
       });
     } else {
       const oui = new ButtonBuilder()
