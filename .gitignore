@@ -24,6 +24,6 @@ hs_err_pid*
 replay_pid*
 
 #mes trucs
-config.json
+*.json
 node_modules/
 deploy_command.js
