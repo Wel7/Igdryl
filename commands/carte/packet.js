@@ -51,7 +51,7 @@ function shuffle(deck)
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("paquet")
-    .setDescription("Voir son paquer de carte"),
+    .setDescription("Info sur le paquet de carte"),
 
   async execute(interaction) {
     const userId = interaction.member.user.id;
@@ -60,9 +60,13 @@ module.exports = {
     );
     if (fs.existsSync(filePath)) {
       interaction.reply({content:"Vous avez déjà un paquet de carte !", ephemeral: true,});
-      /*
-        A FAIRE, VOIR NOMBRE DE CARTE
-      */
+      fs.readFile(filePath, 'utf8', (err, data) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        console.log(data);
+      });
     } else {
       const oui = new ButtonBuilder()
         .setCustomId("oui")
