@@ -8,6 +8,10 @@ const fs = require("fs");
 const path = require("path");
 
 
+/**
+ * Creates a deck of cards with 52 standard cards and 1 Joker card.
+ * @returns {Array} An array of card objects, each with a Value and Suit property.
+ */
 function getDeck() {
   deck = [];
   suits = ["Pique", "Trefle", "Carreau", "Coeur"];
@@ -22,6 +26,11 @@ function getDeck() {
   return deck;
 }
 
+/**
+ * Writes the given deck to a JSON file with the given user ID as the filename.
+ * @param {string} userId - The ID of the user whose deck is being written to the file.
+ * @param {object} deck - The deck object to be written to the file.
+ */
 function writeToFile(userId, deck) {
   const filePath = `./commands/carte/stockage/${userId}.json`;
   const data = JSON.stringify(deck);
@@ -30,10 +39,15 @@ function writeToFile(userId, deck) {
       console.error(err);
       return;
     }
-    console.log(`Deck written to ${filePath}`);
+    console.log(`Deck crée ${filePath}`);
   });
 }
 
+/**
+ * Shuffles an array in place using the Fisher-Yates algorithm.
+ * @param {Array} array - The array to shuffle.
+ * @returns {Array} The shuffled array.
+ */
 function shuffle(array)
 {
   for (let i = array.length - 1; i > 0; i--) {
