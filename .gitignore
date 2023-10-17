@@ -24,5 +24,6 @@ hs_err_pid*
 replay_pid*
 
 #mes trucs
-*.json
+config.json
 node_modules/
+stockage/
