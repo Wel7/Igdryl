@@ -6,11 +6,11 @@ const {
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("lock")
-    .setDescription("Locks a channel.")
+    .setDescription("Lock a channel.")
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels)
     .addChannelOption(option =>
 		option.setName('channel')
-			.setDescription('The channel to echo into')),
+			.setDescription('Le channel qui disparait')),
   async execute(interaction) {
     const channel = interaction.options.getChannel('channel');
     await channel.permissionOverwrites.create(channel.guild.roles.everyone, {ViewChannel: false});   

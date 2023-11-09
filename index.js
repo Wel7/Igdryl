@@ -2,8 +2,10 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, Events, GatewayIntentBits, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder} = require('discord.js');
 const { token } = require('./config.json');
+const { generateDependencyReport } = require('@discordjs/voice');
+console.log(generateDependencyReport());
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates]});
 
 client.commands = new Collection();
 const foldersPath = path.join(__dirname, 'commands');
@@ -24,7 +26,7 @@ for (const folder of commandFolders) {
 }
 
 client.once(Events.ClientReady, () => {
-	console.log('Ready!');
+	console.log('Igdril est vivant !');
 });
 
 client.on(Events.InteractionCreate, async interaction => {
