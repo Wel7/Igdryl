@@ -51,7 +51,7 @@ module.exports = {
     });
 
     connection.on(VoiceConnectionStatus.Disconnected, () => {
-      console.log("Le bot c'est fait déco");
+      console.log("Le bot s'est fait déco");
       if (subs) {
         setTimeout(() => subs.unsubscribe(), 1_000);
       }

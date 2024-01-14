@@ -11,17 +11,16 @@ module.exports = {
             {name:"Monde", value:'monde'},
             {name:"Aria", value:'aria'},
             {name:"Altabianca", value:'altabicanca'},
+            {name:"Aqabah", value:'aqabah'},
+            {name:"Esperanza", value:'esperanza'},
         )
         .setRequired(true)),
-    
-      
 
   async execute(interaction) {
     const map = "./commands/map/maps/" + (interaction.options.getString('lieu')) + ".png"
     const laCarte = new EmbedBuilder()
 	.setTitle(interaction.options.getString('lieu').toUpperCase())
 	.setImage('attachment://' + (interaction.options.getString('lieu')) + ".png");
-    await interaction.channel.send({ embeds: [laCarte], files: [map] });
-    
+    await interaction.reply({ embeds: [laCarte], files: [map] })
   },
 };

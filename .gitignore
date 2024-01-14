@@ -27,3 +27,5 @@ replay_pid*
 config.json
 node_modules/
 stockage/
+maps/
+stats_d/
