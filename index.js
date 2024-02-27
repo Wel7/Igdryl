@@ -1,9 +1,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
-const { Client, Collection, Events, GatewayIntentBits, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder} = require('discord.js');
+const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 const { token } = require('./config.json');
-const { generateDependencyReport } = require('@discordjs/voice');
-console.log(generateDependencyReport());
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates]});
 
@@ -46,27 +44,6 @@ client.on(Events.InteractionCreate, async interaction => {
 			await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
 		}
 	}
-
-    if(interaction.commandName === 'note') {
-
-
-        const modal = new ModalBuilder()
-            .setCustomId('notes')
-            .setTitle('notes')
-            .setDescription('Prenez ou regarder vos notes');
-        
-        const textNote = new TextInputBuilder()
-            .setCustomId('noteInput')
-            .setPlaceholder('Note')
-            
-            .setStyle(TextInputStyle.Paragraph)
-
-        const firstRow = new ActionRowBuilder().addComponents(textNote);
-
-        modal.addComponents(firstRow);
-
-        await interaction.showModal(modal);
-    }
 });
 
 client.login(token);

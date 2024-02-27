@@ -33,20 +33,26 @@ module.exports = {
       " face(s) : ";
     let ttl = 0;
     for (let i = 0; i < nbr; i++) {
-      let temp =
-        Math.floor(Math.random() * interaction.options.getInteger("face")) + 1;
-      addToFile(serverID, userId, temp);
+      let temp = Math.floor(Math.random() * interaction.options.getInteger("face")) + 1;
+      // addToStats(serverID, userId, temp);
       answer += temp + " ";
       ttl += temp;
     }
-    if (!nbr == 1) {
+    if (!(nbr == 1)) {
       answer += "\nTotal = " + ttl;
     }
     await interaction.reply(answer);
   },
 };
 
-function addToFile(serverID, userId, de) {
+
+/**
+ *  Keeping that for the posterity but it don't work well and JSON suck for what I wanted to do anyways, I should use a database
+ * */
+
+/*
+function addToStats(serverID, userId, de) {
+  let values;
   const filePath = `./commands/dice/stats_d/${serverID}/${userId}.json`;
   if (!fs.existsSync(`./commands/dice/stats_d/${serverID}`)){
     fs.mkdirSync(`./commands/dice/stats_d/${serverID}`);
@@ -57,7 +63,14 @@ function addToFile(serverID, userId, de) {
         console.error(err);
         return;
       }
-      const values = JSON.parse(data);
+      try{
+        values = JSON.parse(data);
+      }
+      catch(err){
+        console.log("Il y a eu une erreur dans le parse des jsons")
+        return
+      }
+      
       values.push(de);
       fs.writeFile(filePath, JSON.stringify(values), (err) => {
         if (err) {
@@ -73,6 +86,6 @@ function addToFile(serverID, userId, de) {
         return;
       }
     });
-    return;
   }
 }
+*/

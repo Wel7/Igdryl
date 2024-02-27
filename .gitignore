@@ -28,4 +28,4 @@ config.json
 node_modules/
 stockage/
 maps/
-stats_d/
+stats_d

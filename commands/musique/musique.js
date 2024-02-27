@@ -28,11 +28,11 @@ module.exports = {
 
     const url = interaction.options.getString("lien");
 
-    const musique = await ytdlp(url, { filter: "audioonly" });
-    const ressource = await createAudioResource(musique);
-    const player = await createAudioPlayer();
+    const musique = ytdlp(url, { filter: "audioonly" });
+    const ressource = createAudioResource(musique);
+    const player = createAudioPlayer();
 
-    const connection = await joinVoiceChannel({
+    const connection = joinVoiceChannel({
       channelId: interaction.member.voice.channelId,
       guildId: interaction.guildId,
       adapterCreator: interaction.guild.voiceAdapterCreator,
