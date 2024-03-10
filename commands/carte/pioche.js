@@ -21,15 +21,20 @@ module.exports = {
         }
         const deck = JSON.parse(data);
         const card = deck.pop();
+        ret = ""
         fs.writeFile(filePath, JSON.stringify(deck), (err) => {
           if (err) {
             console.error(err);
             return;
           }
-          console.log(
-            `${interaction.member.user.username} a pioché la carte ${card}`
-          );
-          interaction.reply(`Vous avez pioché un ${card.Value} de ${card.Suit}`);
+          if(deck.length<11 && deck.length>0){
+            ret += `Il ne reste plus que ${deck.length} cartes dans ton packet...\n La folie de la fin approche \n`
+          }
+          if(deck.length==0){
+            ret += `La folie de la fin t'attrape, et ton âme disparait dans les ténèbres.`
+          }
+          ret += `Vous avez pioché un ${card.Value} de ${card.Suit}`
+          interaction.reply(ret);
         });
       });
     }

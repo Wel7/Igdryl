@@ -1,26 +1,38 @@
-const { SlashCommandBuilder, EmbedBuilder  } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const fs = require("node:fs");
+const path = require("node:path");
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("map")
     .setDescription("Vous permet de voir la carte !")
     .addStringOption(option =>
-        option.setName("lieu")
+      option.setName("lieu")
         .setDescription("Nom de la carte que vous voulez voir")
         .addChoices(
-            {name:"Monde", value:'monde'},
-            {name:"Aria", value:'aria'},
-            {name:"Altabianca", value:'altabicanca'},
-            {name:"Aqabah", value:'aqabah'},
-            {name:"Esperanza", value:'esperanza'},
+          ...getMaps()
         )
         .setRequired(true)),
 
   async execute(interaction) {
-    const map = "./commands/map/maps/" + (interaction.options.getString('lieu')) + ".png"
+    await interaction.deferReply();
+    const mapPath = interaction.options.getString('lieu');
+    const mapName = path.basename(mapPath);
     const laCarte = new EmbedBuilder()
-	.setTitle(interaction.options.getString('lieu').toUpperCase())
-	.setImage('attachment://' + (interaction.options.getString('lieu')) + ".png");
-    await interaction.reply({ embeds: [laCarte], files: [map] })
+      .setTitle(mapName)
+      .setImage(`attachment://${mapName}`);
+    await interaction.editReply({ embeds: [laCarte], files: [mapPath] });
   },
 };
+
+function getMaps() {
+  maps = []
+  const foldersPath = path.join(__dirname, 'maps');
+  const mapsFolders = fs.readdirSync(foldersPath);
+
+  for (const file of mapsFolders) {
+    const filePath = path.join(foldersPath, file);
+    maps.push({ name: file, value: filePath })
+  }
+  return maps;
+}
