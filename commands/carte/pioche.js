@@ -9,9 +9,7 @@ module.exports = {
 
   async execute(interaction) {
     const userId = interaction.member.user.id;
-    const filePath = path.join(
-      `/home/hugo/Documents/VSCode/Igdryl/commands/carte/stockage/${userId}.json`
-    );
+    const filePath = path.join(__dirname, "stockage", `${userId}.json`);
 
     if (fs.existsSync(filePath)) {
       fs.readFile(filePath, "utf8", (err, data) => {

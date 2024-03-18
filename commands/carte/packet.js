@@ -32,7 +32,7 @@ function getDeck() {
  * @param {object} deck - The deck object to be written to the file.
  */
 function writeToFile(userId, deck) {
-  const filePath = `./commands/carte/stockage/${userId}.json`;
+  const filePath = path.join(__dirname, "stockage", `${userId}.json`);;
   const data = JSON.stringify(deck);
   fs.writeFile(filePath, data, (err) => {
     if (err) {
@@ -65,9 +65,7 @@ module.exports = {
 
   async execute(interaction) {
     const userId = interaction.member.user.id;
-    const filePath = path.join(
-      `/home/hugo/Documents/VSCode/Igdryl/commands/carte/stockage/${userId}.json`
-    );
+    const filePath = path.join(__dirname, "stockage", `${userId}.json`);
     if (fs.existsSync(filePath)) {
       fs.readFile(filePath, 'utf8', (err, data) => {
         if (err) {
