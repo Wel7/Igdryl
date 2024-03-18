@@ -32,14 +32,18 @@ function getDeck() {
  * @param {object} deck - The deck object to be written to the file.
  */
 function writeToFile(userId, deck) {
-  const filePath = path.join(__dirname, "stockage", `${userId}.json`);;
+  const stockageDir = path.join(__dirname, "stockage");
+  if (!fs.existsSync(stockageDir)) {
+    fs.mkdirSync(stockageDir);
+  }
+  const filePath = path.join(stockageDir, `${userId}.json`);
   const data = JSON.stringify(deck);
   fs.writeFile(filePath, data, (err) => {
     if (err) {
       console.error(err);
       return;
     }
-    console.log(`Deck crée ${filePath}`);
+    console.log(`Deck créé ${filePath}`);
   });
 }
 
@@ -104,11 +108,11 @@ module.exports = {
           time: 15_000,
         });
         if (confirmation.customId === "oui") {
+          writeToFile(interaction.user.id, shuffle(getDeck()));
           await confirmation.update({
             content: `Le paquet a été crée`,
             components: [],
           });
-          writeToFile(interaction.user.id, shuffle(getDeck()));
         } else if (confirmation.customId === "non") {
           await confirmation.update({
             content: `Le paquet n'a pas été crée`,
